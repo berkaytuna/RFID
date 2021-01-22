@@ -92,22 +92,14 @@ int main()
     vector<char*> params{ cardNumber, lockerSegmentInfo, deviceIp, uuid, commandTypeName, isResponse, isNotification };
     vector<int> sizes{ 9, 5, 14, 37, 41, 6, 6 };
 
+    accessRequest accessRequest;
+    vector<byte> command_vec = accessRequest.createRequest(params, sizes);
+    byte* command = &command_vec[0];
 
-
-    //char str[11] = "CardNumber";
-    //char value[9] = "EF0AKL13";
-    //bool isString = true;
-    //vector<byte> line_vec = accessRequest.createLine(str, 11, value, 9, isString);
-    
-    //byte* byteArray = &line_vec[0];
-
-    for (int i = 0; i < line_vec.size(); i++)
-    {       
-        cout << byteArray[i];
+    for (int i = 0; i < command_vec.size(); i++)
+    {
+        cout << command[i];
     }
-
-
-
 
 
 
