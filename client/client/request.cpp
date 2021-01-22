@@ -1,38 +1,18 @@
 // placeholder
 
 #include "request.h"
+#include <iostream>
 
 accessRequest::accessRequest(char* cardNumber, char* lockerSegmentInfo, char* deviceIp,
-	char* id, char* commandTypeName,
-	char* isResponse, char* isNotification)
+	char* id, char* commandTypeName, char* isResponse, char* isNotification)
 {
-
-
-
-
-	/*for 
-	std::vector<char> command;
-	command.reserve()*/
-
-	/*byte cardNumber[sizeof(cardNumber) / sizeof(cardNumber[0]) - 1];
-	for (int i = 0; i < sizeof(cardNumber) / sizeof(cardNumber[0]) - 1; i++)
-	{		
-		cardNumber[i] = str_cardNumber[i];
-	}
-
-	deviceIp[0] = 'a';*/
+	vector<char*> params{cardNumber, lockerSegmentInfo, deviceIp, id,};
 }	
 
-vector<byte> accessRequest::createLine(char* str, char* value, bool isString)
+vector<byte> accessRequest::createLine(char* str, int strSize, char* value, int valueSize, bool isString)
 {
-	vector<char> str_vec(str, str + sizeof str/sizeof str[0]);
-	char* charArray = &str_vec[0];
-	for (int i = 0; i < str_vec.size(); i++)
-	{
-
-	}
-
-	vector<byte> value_vec(value, value + sizeof value/sizeof value[0]);
+	vector<byte> str_vec(str, str + strSize);
+	vector<byte> value_vec(value, value + valueSize);
 	vector<byte> space_vec = isString ? space : spaceNoString;
 	vector<byte> end_vec = isString ? endline : endlineNoString;
 

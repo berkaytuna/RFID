@@ -47,6 +47,6 @@ public:
 
 	vector<char> lines[ACCESS_REQUEST_SIZE];
 
-	vector<byte> createLine(char* str, char* value, bool isString);
+	vector<byte> createLine(char* str, int strSize, char* value, int valueSize, bool isString);
 	vector<char> createLastline(char* str, char* value, bool isString);
 };

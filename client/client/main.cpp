@@ -76,18 +76,41 @@ void bytes2hex(char Hex[/* 2*Sz */], unsigned char Bytes[ /* Sz */], size_t Sz)
 
 int main()
 {
-    accessRequest accessRequest;
-    char str[11] = "CardNumber";
-    char value[9] = "EF0AKL13";
-    bool isString = true;
-    vector<byte> line_vec = accessRequest.createLine(str, value, isString);
+    char cardNumber[9] = "EF0ABCDB";
+    char lockerSegmentInfo[5] = "null";
+    char deviceIp[14] = "192.168.2.142";
+    string uuidStr = generate_uuid();
+    char uuid[37] = { };
+    for (int i = 0; i < 37; i++)
+    {
+        uuid[i] = uuidStr[i];
+    }
+    char commandTypeName[41] = "CDI_Shared_PCL.DataObjects.AccessRequest";
+    char isResponse[6] = "false";
+    char isNotification[6] = "false";
+
+    vector<char*> params{ cardNumber, lockerSegmentInfo, deviceIp, uuid, commandTypeName, isResponse, isNotification };
+    vector<int> sizes{ 9, 5, 14, 37, 41, 6, 6 };
+
+
+
+    //char str[11] = "CardNumber";
+    //char value[9] = "EF0AKL13";
+    //bool isString = true;
+    //vector<byte> line_vec = accessRequest.createLine(str, 11, value, 9, isString);
     
-    byte* byteArray = &line_vec[0];
+    //byte* byteArray = &line_vec[0];
 
     for (int i = 0; i < line_vec.size(); i++)
     {       
         cout << byteArray[i];
     }
+
+
+
+
+
+
 
     /*char str[] = "bC,A0 ";
     byte byteArray[sizeof(str) / sizeof(str[0]) - 1] = { };
@@ -155,12 +178,12 @@ int main()
         }
         printf("\n");*/
 
-
         //accessRequest request;
         //request.CardNumber = "E40A2410";
         //request.DeviceIp = "192.168.2.142";
 
         
+
         byte sendBuff[] = { 0x7B, 0x0D, 0x0A, 0x20, 0x22, 0x43  };
 
         string uuid = generate_uuid();
