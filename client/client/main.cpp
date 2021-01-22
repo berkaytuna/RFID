@@ -76,44 +76,6 @@ void bytes2hex(char Hex[/* 2*Sz */], unsigned char Bytes[ /* Sz */], size_t Sz)
 
 int main()
 {
-    char cardNumber[9] = "EF0ABCDB";
-    char lockerSegmentInfo[5] = "null";
-    char deviceIp[14] = "192.168.2.142";
-    string uuidStr = generate_uuid();
-    char uuid[37] = { };
-    for (int i = 0; i < 37; i++)
-    {
-        uuid[i] = uuidStr[i];
-    }
-    char commandTypeName[41] = "CDI_Shared_PCL.DataObjects.AccessRequest";
-    char isResponse[6] = "false";
-    char isNotification[6] = "false";
-
-    vector<char*> params{ cardNumber, lockerSegmentInfo, deviceIp, uuid, commandTypeName, isResponse, isNotification };
-    vector<int> sizes{ 9, 5, 14, 37, 41, 6, 6 };
-
-    accessRequest accessRequest;
-    vector<byte> command_vec = accessRequest.createRequest(params, sizes);
-    byte* command = &command_vec[0];
-
-    for (int i = 0; i < command_vec.size(); i++)
-    {
-        cout << command[i];
-    }
-
-
-
-
-    /*char str[] = "bC,A0 ";
-    byte byteArray[sizeof(str) / sizeof(str[0]) - 1] = { };
-    cout << sizeof(str) / sizeof(str[0]) << endl;
-    for (int i = 0; i < sizeof(str)/sizeof(str[0]) - 1; i++)
-    {
-        byteArray[i] = (byte)str[i];
-        printf("byteArray[%d] = %d\n", i, byteArray[i]);
-        cout << "Value of byteArray[" << i << "] " << hex << (byteArray[i]) << "  hexadecimal" << endl;
-    }*/
-
     int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     printf("serverSocket: %d\n", serverSocket);
 
@@ -146,7 +108,7 @@ int main()
         if( !mfrc.PICC_ReadCardSerial())
             continue;
 
-        byte cardNumber[4] = {mfrc.uid.uidByte[0], mfrc.uid.uidByte[1], mfrc.uid.uidByte[2], mfrc.uid.uidByte[3]};
+        //byte cardNumber[4] = {mfrc.uid.uidByte[0], mfrc.uid.uidByte[1], mfrc.uid.uidByte[2], mfrc.uid.uidByte[3]};
 
         //unsigned char bytes[] = { 0xaa,0xbb,0xcc,0x11,0x22 };
         //char hex[2 * sizeof(cardNumber) + 1 /*for the '\0' */];
@@ -170,23 +132,35 @@ int main()
         }
         printf("\n");*/
 
-        //accessRequest request;
-        //request.CardNumber = "E40A2410";
-        //request.DeviceIp = "192.168.2.142";
+        // accessRequest
+        char cardNumber[9] = "EF0ABCDB";
+        char lockerSegmentInfo[5] = "null";
+        char deviceIp[14] = "192.168.2.142";
+        char devicePort[2] = "1";
+        string uuidStr = generate_uuid();
+        char uuid[37] = { };
+        for (int i = 0; i < 37; i++)
+        {
+            uuid[i] = uuidStr[i];
+        }
+        char commandTypeName[41] = "CDI_Shared_PCL.DataObjects.AccessRequest";
+        char isResponse[6] = "false";
+        char isNotification[6] = "false";
 
-        
+        vector<char*> params{ cardNumber, lockerSegmentInfo, deviceIp, devicePort, uuid, commandTypeName, isResponse, isNotification };
+        vector<int> sizes{ 9, 5, 14, 2, 37, 41, 6, 6 };
 
-        byte sendBuff[] = { 0x7B, 0x0D, 0x0A, 0x20, 0x22, 0x43  };
+        accessRequest accessRequest;
+        vector<byte> command_vec = accessRequest.createRequest(params, sizes);
+        byte* command = &command_vec[0];
 
-        string uuid = generate_uuid();
-        cout << uuid;
+        for (int i = 0; i < command_vec.size(); i++)
+        {
+            cout << command[i];
+        }
+        cout << endl;
 
- 
-
-        //accessRequest accessRequest{sendBuff};
-
-        //char* sendBuf = "a";
-        int sendResult = send(serverSocket, cardNumber, sizeof(cardNumber)/sizeof(cardNumber[0]) /*(int)strlen(hex)*/, 0);
+        int sendResult = send(serverSocket, command, command_vec.size() /*(int)strlen(hex)*/, 0);
         printf("sendResult: %d\n", sendResult);
         //printf("sending: %s\n", hex);
 
