@@ -1,0 +1,53 @@
+received message is: 7B-0D-0A-20-20-22-43-61-72-64-4E-75-6D-62-65-72-22-3A-20-22-45-34-30-41-32-34-31-30-22-2C-0D-0A-20-20-22-4C-6F-63-6B-65-72-53-65-67-6D-65-6E-74-49-6E-66-6F-22-3A-20-6E-75-6C-6C-2C-0D-0A-20-20-22-44-65-76-69-63-65-49-70-22-3A-20-22-31-39-32-2E-31-36-38-2E-32-2E-31-34-34-22-2C-0D-0A-20-20-22-44-65-76-69-63-65-50-6F-72-74-22-3A-20-31-2C-0D-0A-20-20-22-49-44-22-3A-20-22-37-62-65-66-30-33-64-39-2D-32-34-35-62-2D-34-36-34-35-2D-38-39-64-30-2D-35-62-34-63-63-34-65-38-39-32-34-36-22-2C-0D-0A-20-20-22-43-6F-6D-6D-61-6E-64-54-79-70-65-4E-61-6D-65-22-3A-20-22-43-44-49-5F-53-68-61-72-65-64-5F-50-43-4C-2E-44-61-74-61-4F-62-6A-65-63-74-73-2E-41-63-63-65-73-73-52-65-71-75-65-73-74-22-2C-0D-0A-20-20-22-49-73-52-65-73-70-6F-6E-73-65-22-3A-20-66-61-6C-73-65-2C-0D-0A-20-20-22-49-73-4E-6F-74-69-66-69-63-61-74-69-6F-6E-22-3A-20-66-61-6C-73-65-0D-0A-7D
+
+
+
+
+{
+  "CardNumber": "E40A2410",
+  "LockerSegmentInfo": null,
+  "DeviceIp": "192.168.2.144",
+  "DevicePort": 1,
+  "ID": "7bef03d9-245b-4645-89d0-5b4cc4e89246",
+  "CommandTypeName": "CDI_Shared_PCL.DataObjects.AccessRequest",
+  "IsResponse": false,
+  "IsNotification": false
+}
+
+
+Connected Endpoints -  Devices: 1  Clients: 1  Other: 0
+21.01.2021 14:06:04.623 Sender: 192.168.2.144:1 Receiver: 192.168.2.215:55887
+Received CDI_Shared_PCL.DataObjects.AccessRequest from device.
+
+Connected Endpoints -  Devices: 1  Clients: 1  Other: 0
+21.01.2021 14:06:04.635 Sender: 192.168.2.144:1 Receiver: 192.168.2.215:55887
+Sending CDI_Shared_PCL.DataObjects.AccessRequest to client.
+
+Connected Endpoints -  Devices: 1  Clients: 1  Other: 0
+21.01.2021 14:06:04.641 Sender: 192.168.2.215:55887 Receiver: 192.168.2.144:1
+Received CDI_Shared_PCL.DataObjects.AccessRequestResponse from client.
+
+
+
+{
+  "AccessGranted": true,
+  "Message": null,
+  "LockerSegmentInfo": null,
+  "Credit": null,
+  "RequestID": "7bef03d9-245b-4645-89d0-5b4cc4e89246",
+  "DeviceIp": "192.168.2.144",
+  "DevicePort": 1,
+  "ID": "35976174-f238-42c9-963d-4166197ebbaa",
+  "CommandTypeName": "CDI_Shared_PCL.DataObjects.AccessRequestResponse",
+  "IsResponse": true,
+  "IsNotification": false
+}
+
+
+Connected Endpoints -  Devices: 1  Clients: 1  Other: 0
+21.01.2021 14:06:04.651 Sender: 192.168.2.215:55887 Receiver: 192.168.2.144:1
+Sending CDI_Shared_PCL.DataObjects.AccessRequestResponse to device.
+
+
+
+received message is: 7B-0D-0A-20-20-22-44-65-76-69-63-65-49-70-22-3A-20-22-31-39-32-2E-31-36-38-2E-32-2E-31-34-34-22-2C-0D-0A-20-20-22-44-65-76-69-63-65-50-6F-72-74-22-3A-20-31-2C-0D-0A-20-20-22-49-44-22-3A-20-22-32-63-63-63-66-33-62-63-2D-66-62-65-30-2D-34-35-31-34-2D-62-61-36-39-2D-65-63-36-30-36-34-36-30-66-37-30-33-22-2C-0D-0A-20-20-22-43-6F-6D-6D-61-6E-64-54-79-70-65-4E-61-6D-65-22-3A-20-22-43-44-49-5F-53-68-61-72-65-64-5F-50-43-4C-2E-44-61-74-61-4F-62-6A-65-63-74-73-2E-50-69-6E-67-52-65-71-75-65-73-74-22-2C-0D-0A-20-20-22-49-73-52-65-73-70-6F-6E-73-65-22-3A-20-66-61-6C-73-65-2C-0D-0A-20-20-22-49-73-4E-6F-74-69-66-69-63-61-74-69-6F-6E-22-3A-20-66-61-6C-73-65-0D-0A-7D
