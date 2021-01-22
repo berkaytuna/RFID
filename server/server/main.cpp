@@ -84,9 +84,9 @@ void acceptConnection(int socketServer)
 
 			memset(&client, 0, sizeof(client));
 			client.sin_family = AF_INET;
-			addrClient = inet_addr("192.168.2.142");
+			addrClient = INADDR_ANY; // inet_addr("192.168.2.142");
 			memcpy((char*)&client.sin_addr, &addrClient, sizeof(addrClient));
-			client.sin_port = htons(22);
+			client.sin_port = INADDR_ANY; // htons(22);
 
 			int socketLength = sizeof(client);
 			int clientSocket = accept(socketServer, (struct sockaddr*)&client, &socketLength);
@@ -145,6 +145,9 @@ int main()
 	printf("listenResult: %d\n\n", listenResult);
 
 	thread acceptThread(acceptConnection, serverSocket);
+
+	byte byte1 = 0xDE;
+	printf("byte1 is: %");
 
 	while (1)
 	{

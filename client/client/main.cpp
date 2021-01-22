@@ -1,4 +1,4 @@
-// placeholder
+﻿// placeholder
 
 #ifdef WIN32
 #include <windows.h>
@@ -11,10 +11,53 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <string.h>
+#include <iostream>
 #include <arpa/inet.h>
+#include <random>
+#include <sstream>
+#include "request.h"
 
 #define PIN RPI_GPIO_P1_08
 #define DEFAULT_BUFLEN 512
+
+//namespace uuid {
+    /*static std::random_device              rd;
+    static std::mt19937                    gen(rd());
+    static std::uniform_int_distribution<> dis(0, 15);
+    static std::uniform_int_distribution<> dis2(8, 11);*/
+    string generate_uuid() /*generate_uuid_v4()*/ 
+    {
+        static std::random_device              rd;
+        static std::mt19937                    gen(rd());
+        static std::uniform_int_distribution<> dis(0, 15);
+        static std::uniform_int_distribution<> dis2(8, 11);
+
+        std::stringstream ss;
+        int i;
+        ss << std::hex;
+        for (i = 0; i < 8; i++) {
+            ss << dis(gen);
+        }
+        ss << "-";
+        for (i = 0; i < 4; i++) {
+            ss << dis(gen);
+        }
+        ss << "-4";
+        for (i = 0; i < 3; i++) {
+            ss << dis(gen);
+        }
+        ss << "-";
+        ss << dis2(gen);
+        for (i = 0; i < 3; i++) {
+            ss << dis(gen);
+        }
+        ss << "-";
+        for (i = 0; i < 12; i++) {
+            ss << dis(gen);
+        };
+        return ss.str();
+    }
+//}
 
 void delay(int ms) {
 #ifdef WIN32
@@ -33,6 +76,29 @@ void bytes2hex(char Hex[/* 2*Sz */], unsigned char Bytes[ /* Sz */], size_t Sz)
 
 int main()
 {
+    accessRequest accessRequest;
+    char str[11] = "CardNumber";
+    char value[9] = "EF0AKL13";
+    bool isString = true;
+    vector<byte> line_vec = accessRequest.createLine(str, value, isString);
+    
+    byte* byteArray = &line_vec[0];
+
+    for (int i = 0; i < line_vec.size(); i++)
+    {       
+        cout << byteArray[i];
+    }
+
+    /*char str[] = "bC,A0 ";
+    byte byteArray[sizeof(str) / sizeof(str[0]) - 1] = { };
+    cout << sizeof(str) / sizeof(str[0]) << endl;
+    for (int i = 0; i < sizeof(str)/sizeof(str[0]) - 1; i++)
+    {
+        byteArray[i] = (byte)str[i];
+        printf("byteArray[%d] = %d\n", i, byteArray[i]);
+        cout << "Value of byteArray[" << i << "] " << hex << (byteArray[i]) << "  hexadecimal" << endl;
+    }*/
+
     int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     printf("serverSocket: %d\n", serverSocket);
 
@@ -68,9 +134,9 @@ int main()
         byte cardNumber[4] = {mfrc.uid.uidByte[0], mfrc.uid.uidByte[1], mfrc.uid.uidByte[2], mfrc.uid.uidByte[3]};
 
         //unsigned char bytes[] = { 0xaa,0xbb,0xcc,0x11,0x22 };
-        char hex[2 * sizeof(cardNumber) + 1 /*for the '\0' */];
-        hex[sizeof(hex) - 1] = '\0';
-        bytes2hex(hex, cardNumber, sizeof(cardNumber));
+        //char hex[2 * sizeof(cardNumber) + 1 /*for the '\0' */];
+        //hex[sizeof(hex) - 1] = '\0';
+        //bytes2hex(hex, cardNumber, sizeof(cardNumber));
 
         // Print UID
         /*for(byte i = 0; i < mfrc.uid.size; ++i)
@@ -89,10 +155,30 @@ int main()
         }
         printf("\n");*/
 
+
+        //accessRequest request;
+        //request.CardNumber = "E40A2410";
+        //request.DeviceIp = "192.168.2.142";
+
+        
+        byte sendBuff[] = { 0x7B, 0x0D, 0x0A, 0x20, 0x22, 0x43  };
+
+        string uuid = generate_uuid();
+        cout << uuid;
+
+ 
+
+        //accessRequest accessRequest{sendBuff};
+
         //char* sendBuf = "a";
-        int sendResult = send(serverSocket, hex, (int)strlen(hex), 0);
+        int sendResult = send(serverSocket, cardNumber, sizeof(cardNumber)/sizeof(cardNumber[0]) /*(int)strlen(hex)*/, 0);
         printf("sendResult: %d\n", sendResult);
-        printf("sending: %s\n", hex);
+        //printf("sending: %s\n", hex);
+
+        /*for (int i; i < sizeof(hex) / sizeof(hex[0]); i++)
+        {
+            printf("first byte: %d\n", hex[i]);
+        }*/
 
         delay(5000);
 
