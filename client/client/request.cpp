@@ -1,13 +1,10 @@
-// placeholder
+// Placeholder.
 
 #include "request.h"
 #include <iostream>
 
-vector<byte> accessRequest::createRequest(vector<char*> params, vector<int> sizes)
+vector<byte> requestBase::createRequest(vector<char*> params, vector<int> sizes)
 {
-	vector<char*> strings{ str_cardNumber, str_lockerSegmentInfo, str_deviceIp, str_devicePort, str_id, str_commandTypeName, str_isResponse, str_isNotification };
-	vector<int> strSizes{ 11, 18, 9, 11, 3, 16, 11, 15 };
-
 	vector<byte> commandLines[params.size()];
 	int commandSize = 0;
 	for (int i = 0; i < params.size(); i++)
@@ -19,7 +16,7 @@ vector<byte> accessRequest::createRequest(vector<char*> params, vector<int> size
 
 	vector<byte> command;
 	command.reserve(commandSize + 2);
-	command.insert(command.end(), init.begin(), init.end());
+	command.insert(command.end(), start.begin(), start.end());
 	for (int i = 0; i < params.size(); i++)
 	{
 		command.insert(command.end(), commandLines[i].begin(), commandLines[i].end());
@@ -29,7 +26,7 @@ vector<byte> accessRequest::createRequest(vector<char*> params, vector<int> size
 	return command;
 }
 
-vector<byte> accessRequest::createLine(char* str, int strSize, char* value, int valueSize, bool isString, bool isLastLine)
+vector<byte> requestBase::createLine(char* str, int strSize, char* value, int valueSize, bool isString, bool isLastLine)
 {
 	vector<byte> str_vec(str, str + strSize - 1);
 	vector<byte> value_vec(value, value + valueSize - 1);
